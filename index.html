@@ -5,25 +5,47 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="generator" content="Bharatham 2k17">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="shortcut icon" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/images/icon.png" type="image/x-icon"> -->
+  <link rel="shortcut icon" href="https://rawgit.com/kirananto/bharatham/master/assets/images/icon.png" type="image/x-icon">
+  <link rel="manifest" href="https://rawgit.com/kirananto/bharatham/master/assets/manifest.json">
+   <meta name="theme-color" content="#401c42" />
   <meta name="description" content="">
   <title>BHARATHAM 2k17</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/web/assets/icons/icons.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/tether/tether.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/dropdown/css/style.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/socicon/css/styles.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/theme/css/style.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/kirananto/bharatham/master/assets/additional/css/additional.css" type="text/css">
-  <!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script> -->
-<!-- <script src="https://cdn.rawgit.com/davidjbradshaw/iframe-resizer/master/js/iframeResizer.contentWindow.min.js"></script> -->
-<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script> -->
-
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/web/assets/icons/icons.css">
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/tether/tether.min.css">
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/theme/css/style.css">
+  <link rel="stylesheet" href="assets/additional/css/additional.css" type="text/css">
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDwhlGYmRDt_-AG_dNSQfbJnBQ6EUD5nh4",
+    authDomain: "bharatham-2k17.firebaseapp.com",
+    databaseURL: "https://bharatham-2k17.firebaseio.com",
+    projectId: "bharatham-2k17",
+    storageBucket: "bharatham-2k17.appspot.com",
+    messagingSenderId: "859947034253"
+  };
+  firebase.initializeApp(config);
+ var scoreRef = firebase.database().ref('main/score');
+scoreRef.on('value', function(snapshot) {
+  app.groups[0].Points = snapshot.val().aryans
+  app.groups[1].Points = snapshot.val().mughals
+  app.groups[2].Points = snapshot.val().rajputs
+  app.groups[3].Points = snapshot.val().vikings
+  app.groups[4].Points = snapshot.val().spartans
+});
+</script>
 
 </head>
 <body>
+
   <div id="app">
 <section class="menu cid-qr22Lg6fJW" once="menu" id="menu1-g" data-rv-view="78">
 
@@ -54,6 +76,11 @@
                     class="nav-link link display-4" v-text="item.title">
                     </a>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link link">
+                  <span class="mbri-music mbr-iconfont mbr-iconfont-btn" onclick="aud_play_pause()"  id="audio"></span>
+                </a>
+                </li>
 
             </ul>
 
@@ -62,7 +89,46 @@
 </section>
 
 <section class="engine"></section>
-<page ></page>
+<section class="cid-qr22LijaMf mbr-fullscreen mbr-parallax-background" id="header2-e" data-rv-view="80">
+
+      <div class="container align-center">
+          <div class="media-container-column mbr-white col-md-10 offset-md-1">
+            <canvas id="scene" class="mbr-section-title " style="margin-top:70px;" width="1332" height="250"></canvas>
+            <h1 class="mbr-section-title pb-3 mbr-fonts-style display-1 hidden " id="2k17">2K17</h1>
+
+
+          </div>
+      </div>
+  </section>
+
+
+  <section v-if="testing" class="cid-qsa76ohnMU" id="pricing-tables1-k" data-rv-view="32">
+
+    
+
+    
+    <div class="container">
+        <div class="media-container-row">
+
+
+            <div v-for="group in groups" class="plan col-12 mx-2 my-2 justify-content-center col-lg-2">
+                <div class="plan-header text-center pt-5">
+                <img :src="'assets/images/group/'+group.groupname+'.png'" 
+                    class="groupimg">
+                    <h3 class=" mbr-fonts-style display-5 text-black " v-text="group.groupname">
+                    </h3>
+                    
+                <div class="plan-body">
+                    <span class="price-figure mbr-fonts-style display-1" v-text="group.Points">
+                        </span>
+                        <small class="price-term mbr-fonts-style display-7"><br>  
+                            Points
+                        </small>
+                </div>
+            </div>
+          </div>
+    </div>
+</section>
 <section once="" class="cid-qrtL4E2nFT" id="footer7-o" data-rv-view="83">
 
 
@@ -92,25 +158,13 @@
                 <div class="social-list align-right pb-2">
 
 
-
-
-
-
                 <div class="soc-item">
-                        <a href="#" target="_blank">
+                        <a href="https://www.facebook.com/bharatham2017" target="_blank">
                             <span class="mbr-iconfont mbr-iconfont-social socicon-facebook socicon" media-simple="true"></span>
                         </a>
                     </div><div class="soc-item">
-                        <a href="#" target="_blank">
+                        <a href="https://instagram.com/_u/bharatham2k176699" target="_blank">
                             <span class="mbr-iconfont mbr-iconfont-social socicon-instagram socicon" media-simple="true"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="#" target="_blank">
-                            <span class="mbr-iconfont mbr-iconfont-social socicon-whatsapp socicon" media-simple="true"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="#" target="_blank">
-                            <span class="mbr-iconfont mbr-iconfont-social socicon-googleplus socicon" media-simple="true"></span>
                         </a>
                     </div></div>
             </div>
@@ -121,49 +175,53 @@
     </div>
 </section>
 
-<script type="text/x-template" id="page">
-
-  <section class="cid-qr22LijaMf mbr-fullscreen mbr-parallax-background" id="header2-e" data-rv-view="80">
-
-      <div class="container align-center">
-          <div class="media-container-column mbr-white col-md-10 offset-md-1">
-            <canvas id="scene" class="mbr-section-title " style="margin-top:70px;" width="1332" height="250"></canvas>
-            <h1 class="mbr-section-title pb-3 mbr-fonts-style display-1 hidden " id="2k17">2K17</h1>
-
-
-          </div>
-      </div>
-  </section>
-</script>
 <div class="modal fade Register" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg col-md-12">
     <div class="modal-content"
     class="col-md-6">
-<div class="embed-responsive" style="padding-top:100%">
+<div class="embed-responsive">
   <!-- /*<style>iframe{width:100%}</style>*/ -->
-<iframe id="ifram" target="_parent"
-src="http://bharatham2k17.com/register/" style="border-radius:10px;"
+<iframe id="ifram" class="frm" target="_parent"
+src="/register/" style="border-radius:10px;"
   frameborder="0"
   marginheight="0"
   marginwidth="0">Loading...</iframe>
   <!-- <script>iFrameResize({log:true}, '#ifram')</script> -->
 </div>
+
 </div>
 
     </div>
   </div>
 </div>
-<!-- <audio id="myAudio"
- <source src="http://www.orangefreesounds.com/wp-content/uploads/2015/09/Calm-ocean-waves.mp3"
+<audio  autoplay = "autoplay" id="myAudio"
+ <source  src="https://rawgit.com/kirananto/bharatham/master/assets/audio/bgm.mp3"
          type='audio/mp4'>
-</audio> -->
+</audio>
+<style>
+
+@media (max-width: 768px) {
+   .embed-responsive {
+    padding-top:200% !important; border-radius: 30px;
+    }
+}
+
+@media (min-width: 768px) {
+   .embed-responsive {
+    padding-top:100% !important; border-radius: 30px;
+    }
+}
+
+</style>
 <script>
-// var myAudio = document.getElementById("myAudio");
-//   if (myAudio.paused) {
-//     myAudio.play();
-//   } else {
-//     myAudio.pause();
-//   }
+function aud_play_pause() {
+var myAudio = document.getElementById("myAudio");
+  if (myAudio.paused) {
+    myAudio.play();
+  } else {
+    myAudio.pause();
+  }
+}
 
 </script>
 <div class="modal fade gtouch" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -178,7 +236,7 @@ src="http://bharatham2k17.com/register/" style="border-radius:10px;"
 
           <div class="team-item col-lg-4 col-md-6">
                   <div class="item-image">
-                      <img src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/images/bisto.jpg" class="img-icon" media-simple="true">
+                      <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAbrAAAAJDBjZjFhZjliLWJjYjMtNGYxMy1iNWEyLTIyOTY5ODk4YjhlMg.jpg" class="img-icon" media-simple="true">
                   </div>
                   <div class="item-caption py-3">
                       <div class="item-name px-2">
@@ -202,7 +260,7 @@ src="http://bharatham2k17.com/register/" style="border-radius:10px;"
                   </div>
               </div><div class="team-item col-lg-4 col-md-6">
                   <div class="item-image">
-                      <img src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/images/zen.jpg" class="img-icon" media-simple="true">
+                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/zen.jpg" class="img-icon" media-simple="true">
                   </div>
                   <div class="item-caption py-3">
                       <div class="item-name px-2">
@@ -226,7 +284,7 @@ src="http://bharatham2k17.com/register/" style="border-radius:10px;"
                   </div>
               </div><div class="team-item col-lg-4 col-md-6">
                   <div class="item-image">
-                      <img src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/images/delma.jpg" class="img-icon" media-simple="true">
+                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/delma.jpg" class="img-icon" media-simple="true">
                   </div>
                   <div class="item-caption py-3">
                       <div class="item-name px-2">
@@ -251,7 +309,57 @@ src="http://bharatham2k17.com/register/" style="border-radius:10px;"
               </div>
               <div class="team-item col-lg-4 col-md-6">
                   <div class="item-image">
-                      <img src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/images/kiran.jpg" class="img-icon" media-simple="true">
+                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/arjun.jpg" class="img-icon" media-simple="true">
+                  </div>
+                  <div class="item-caption py-3">
+                      <div class="item-name px-2">
+                          <p class="mbr-fonts-style display-5">
+                             Arjun Sethunath
+                          </p>
+                      </div>
+                      <div class="item-role px-2">
+                          <p>General Convenor</p>
+                      </div>
+                      <div class="item-social pt-2">
+                          <a href="https://www.facebook.com/Arjun.sethunath" target="_blank">
+                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+
+
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="team-item col-lg-4 col-md-6">
+                  <div class="item-image">
+                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/razi.jpg" class="img-icon" media-simple="true">
+                  </div>
+                  <div class="item-caption py-3">
+                      <div class="item-name px-2">
+                          <p class="mbr-fonts-style display-5">
+                             Razi Abdul Rahman
+                          </p>
+                      </div>
+                      <div class="item-role px-2">
+                          <p>General Secretary</p>
+                      </div>
+                      <div class="item-social pt-2">
+                          <a href="https://www.facebook.com/razi.abdulrahman.1" target="_blank">
+                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+
+
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="team-item col-lg-4 col-md-6">
+                  <div class="item-image">
+                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/kiran.jpg" class="img-icon" media-simple="true">
                   </div>
                   <div class="item-caption py-3">
                       <div class="item-name px-2">
@@ -263,7 +371,7 @@ src="http://bharatham2k17.com/register/" style="border-radius:10px;"
                           <p>Tech Support</p>
                       </div>
                       <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/Georgezn510" target="_blank">
+                          <a href="https://www.facebook.com/kiran.anto1" target="_blank">
                               <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
                               <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
                               <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
@@ -298,28 +406,45 @@ src="http://bharatham2k17.com/register/" style="border-radius:10px;"
                           </a>
                       </div>
                   </div>
+              </div>
+              <div class="team-item col-lg-4 col-md-6">
+                  <div class="item-image">
+                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/gokul.jpg" class="img-icon" media-simple="true">
+                  </div>
+                  <div class="item-caption py-3">
+                      <div class="item-name px-2">
+                          <p class="mbr-fonts-style display-5">
+                             Gokul Krishna
+                          </p>
+                      </div>
+                      <div class="item-role px-2">
+                          <p> Finance Head</p>
+                      </div>
+                      <div class="item-social pt-2">
+                          <a href="https://www.facebook.com/gokulk10" target="_blank">
+                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+
+
+                          </a>
+                      </div>
+                  </div>
               </div></div>
       </div>
 </div>
 
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/web/assets/jquery/jquery.min.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/tether/tether.min.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/smooth-scroll/smooth-scroll.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/dropdown/js/script.min.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/jarallax/jarallax.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/tether/tether.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/smooth-scroll/smooth-scroll.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/dropdown/js/script.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/jarallax/jarallax.min.js"></script>
   <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/theme/js/script.js"></script>
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script>
- //
- // Begining of index.js
-Vue.component('page', {
-  template: '#page',
-  data: function(){
-    return dat;
-  }
-})
 
 var dat = {
   menu: [
@@ -329,7 +454,16 @@ var dat = {
   title: 'BHARATHAM\
           2k17',
   register: true,
-  logo: false
+  logo: false,
+  testing: false,
+  groups: [
+      {groupname: 'Aryans', Points:0},
+      {groupname: 'Mughals', Points:0},
+      {groupname: 'Rajputs', Points:0},
+      {groupname: 'Vikings', Points:0},
+      {groupname: 'Spartans', Points:0}
+
+  ],
 };
 
 var app = new Vue({
@@ -403,75 +537,75 @@ ww = ww > wh? ww: wh;
 wh = ww > wh? wh: ww;
 
 function Particle(x, y, lastX, lastY){
-	this.x =  lastX;
-	this.y =  lastY;
-	this.dest = {
-		x : x,
-		y: y
-	};
-	this.r =  Math.random()*5*(ww/radiusFactor) + 2;
-	this.vx = (Math.random()-0.5)*20;
-	this.vy = (Math.random()-0.5)*20;
-	this.accX = 0;
-	this.accY = 0;
-	this.friction = Math.random()*0.05 + 0.9;
+  this.x =  lastX;
+  this.y =  lastY;
+  this.dest = {
+    x : x,
+    y: y
+  };
+  this.r =  Math.random()*5*(ww/radiusFactor) + 2;
+  this.vx = (Math.random()-0.5)*20;
+  this.vy = (Math.random()-0.5)*20;
+  this.accX = 0;
+  this.accY = 0;
+  this.friction = Math.random()*0.05 + 0.9;
 
-	this.color = colors[Math.floor(Math.random()*(colors.length + 1))];
+  this.color = colors[Math.floor(Math.random()*(colors.length + 1))];
 }
 
 Particle.prototype.render = function() {
-	this.accX = (this.dest.x - this.x)/300;
-	this.accY = (this.dest.y - this.y)/300;
-	this.vx += this.accX;
-	this.vy += this.accY;
-	this.vx *= this.friction;
-	this.vy *= this.friction;
+  this.accX = (this.dest.x - this.x)/300;
+  this.accY = (this.dest.y - this.y)/300;
+  this.vx += this.accX;
+  this.vy += this.accY;
+  this.vx *= this.friction;
+  this.vy *= this.friction;
 
-	this.x += this.vx;
-	this.y +=  this.vy;
+  this.x += this.vx;
+  this.y +=  this.vy;
 
-	ctx.fillStyle = this.color;
-	ctx.beginPath();
-	ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);
-	ctx.fill();
+  ctx.fillStyle = this.color;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);
+  ctx.fill();
 
-	var a = this.x - mouse.x;
-	var b = this.y - mouse.y;
+  var a = this.x - mouse.x;
+  var b = this.y - mouse.y;
 
-	var distance = Math.sqrt( a*a + b*b );
-	if(distance<(radius*70)){
-		this.accX = (this.x - mouse.x)/100;
-		this.accY = (this.y - mouse.y)/100;
-		this.vx += this.accX;
-		this.vy += this.accY;
-	}
+  var distance = Math.sqrt( a*a + b*b );
+  if(distance<(radius*70)){
+    this.accX = (this.x - mouse.x)/100;
+    this.accY = (this.y - mouse.y)/100;
+    this.vx += this.accX;
+    this.vy += this.accY;
+  }
 }
 
 function onMouseMove(e){
-	mouse.x = e.clientX;
-	mouse.y = e.clientY;
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 }
 
 function onTouchMove(e){
-	console.log("moved");
-	if(e.touches.length > 0 ){
-		mouse.x = e.touches[0].clientX;
-		mouse.y = e.touches[0].clientY;
-	}
+  console.log("moved");
+  if(e.touches.length > 0 ){
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  }
 }
 
 function onTouchEnd(e){
-	console.log("ended");
-	mouse.x = -9999;
-	mouse.y = -9999;
+  console.log("ended");
+  mouse.x = -9999;
+  mouse.y = -9999;
 }
 
 function onMouseUp(e){
-	console.log("mu");
-	setTimeout(()=>{
-		mouse.x = -9999;
-		mouse.y = -9999;
-	},50);
+  console.log("mu");
+  setTimeout(()=>{
+    mouse.x = -9999;
+    mouse.y = -9999;
+  },50);
 }
 
 function initScene(text){
@@ -484,55 +618,55 @@ function initScene(text){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.font = "bold "+Math.floor((ww/10)*(text.length >14 || fontSizeFactor === null ?14/text.length:fontSizeFactor))+"px " + font;
-	// console.log(ctx.font);
-	ctx.textAlign = "center";
-	ctx.fillText(text, ww/2, wh/2);
+  // console.log(ctx.font);
+  ctx.textAlign = "center";
+  ctx.fillText(text, ww/2, wh/2);
 
-	var data  = ctx.getImageData(0, 0, ww, wh).data;
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.globalCompositeOperation = "screen";
+  var data  = ctx.getImageData(0, 0, ww, wh).data;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.globalCompositeOperation = "screen";
 
-	console.log("length" + lastPosX.length);
-	particles = [];
-	var count = 0;
-	for(var i=0;i<ww;i+=Math.round(ww/densityFactor)){
-		for(var j=0;j<wh;j+=Math.round(ww/densityFactor)){
+  console.log("length" + lastPosX.length);
+  particles = [];
+  var count = 0;
+  for(var i=0;i<ww;i+=Math.round(ww/densityFactor)){
+    for(var j=0;j<wh;j+=Math.round(ww/densityFactor)){
 
-			if(data[ ((i + j*ww)*4) + 3] > 150){
-				count = count + 1;
+      if(data[ ((i + j*ww)*4) + 3] > 150){
+        count = count + 1;
 
-				if (lastPosX.length < count) {
-					lastPosX.push(Math.random()*ww);
-					lastPosY.push(Math.random()*wh);
+        if (lastPosX.length < count) {
+          lastPosX.push(Math.random()*ww);
+          lastPosY.push(Math.random()*wh);
 
-				}
+        }
 
-				particles.push(new Particle(i, j, lastPosX[count-1], lastPosY[count-1]));
-			}
-		}
-	}
-	amount = particles.length;
+        particles.push(new Particle(i, j, lastPosX[count-1], lastPosY[count-1]));
+      }
+    }
+  }
+  amount = particles.length;
 
 
-	console.log("no.of parts: " + amount)
+  console.log("no.of parts: " + amount)
 }
 
 function onMouseClick(){
-	//radius++;
-	console.log("click");
-	if(radius ===5){
-		radius = 0;
-	}
+  //radius++;
+  console.log("click");
+  if(radius ===5){
+    radius = 0;
+  }
 }
 
 function render(a) {
-	requestAnimationFrame(render);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	for (var i = 0; i < amount; i++) {
-		particles[i].render();
-		lastPosX[i] = particles[i].x;
-		lastPosY[i] = particles[i].y;
-	}
+  requestAnimationFrame(render);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (var i = 0; i < amount; i++) {
+    particles[i].render();
+    lastPosX[i] = particles[i].x;
+    lastPosY[i] = particles[i].y;
+  }
 };
 
 // copy.addEventListener("keyup", initScene);
@@ -598,19 +732,6 @@ window.sr = ScrollReveal();
       },scrollDelay);
     });
 
-  // sr.reveal('#e2017',{ duration: 2000,origin: "bottom",distance: "200px"});
-  // sr.reveal('#e2016',{ duration: 2000,delay:200,origin: "bottom",distance: "200px"});
-  // sr.reveal('#e2015',{ duration: 2000,delay:400,origin: "bottom",distance: "200px"});
-  // sr.reveal('#e2014',{ duration: 2000,delay:800,origin: "bottom",distance: "200px"});
-  //
-  // // sr.reveal('.copyrt',{duration:2000,origin: "bottom"});
-  //
-  // sr.reveal('.facebook',{ duration: 2000,delay:400,origin: "bottom",distance: "100px"});
-  // sr.reveal('.gplus',{ duration: 2000,delay:200,origin: "bottom",distance: "100px"});
-  // sr.reveal('.insta',{ duration: 2000,origin: "bottom",distance: "100px"});
-  //
-  // sr.reveal('.mec-logo',{ duration: 2000, origin:"left",distance:"100px"});
-  // sr.reveal('.excel-logo',{ duration: 2000, origin: "right",distance:"100px"});
 })()
 
 </script>

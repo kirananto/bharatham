@@ -1259,3 +1259,59 @@ pre {
     -moz-border-radius: 10px !important;
     border-radius: 10px !important;
 }
+
+.cid-qsa76ohnMU {
+  padding-top: 90px;
+  padding-bottom: 90px;
+ background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("../../../assets/images/bg.jpg") no-repeat 0 0;
+}
+.cid-qsa76ohnMU .list-group-item {
+  padding: .75rem 3.25rem;
+}
+.cid-qsa76ohnMU .plan {
+  position: relative;
+  max-width: 300px;
+  padding-right: 0;
+  padding-left: 0;
+  color: #767676;
+}
+.cid-qsa76ohnMU .plan .list-group-item {
+  position: relative;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border: 0;
+}
+.cid-qsa76ohnMU .plan .list-group-item::after {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  content: "";
+  background-color: #eaeaea;
+}
+.cid-qsa76ohnMU .plan .list-group-item:last-child::after {
+  display: none;
+}
+.cid-qsa76ohnMU .plan-header,
+.cid-qsa76ohnMU .plan-body {
+  background-color: #fff;
+}
+.cid-qsa76ohnMU .price-figure {
+  font-weight: 700;
+  color: #232323;
+}
+.cid-qsa76ohnMU .price-value {
+  font-weight: 700;
+  vertical-align: top;
+}
+@media (max-width: 550px) {
+  .cid-qsa76ohnMU .price-figure {
+    font-size: 4.25rem;
+  }
+}
+
+.groupimg{
+  height: 12rem;
+  padding : 1rem;
+}
