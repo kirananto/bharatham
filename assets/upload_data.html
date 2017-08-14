@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Bharatham 2k17">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <title>BHARATHAM 2k17</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDwhlGYmRDt_-AG_dNSQfbJnBQ6EUD5nh4",
+    authDomain: "bharatham-2k17.firebaseapp.com",
+    databaseURL: "https://bharatham-2k17.firebaseio.com",
+    projectId: "bharatham-2k17",
+    storageBucket: "bharatham-2k17.appspot.com",
+    messagingSenderId: "859947034253"
+  };
+  firebase.initializeApp(config);
+</script>
+  </head>
+<body>
+<style>
+label{
+      font-weight: bold;
+}
+.icl {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 5px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  border-radius: 10px;
+}
+
+.dropd {
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 5px;
+  /*padding: 15px;*/
+  box-sizing: border-box;
+  font-size: 14px;
+
+  border-radius: 10px;
+}
+
+button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #684073;
+  width: 100%;
+  border: 0;
+  margin-top: 10px;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.btn-primary {
+  background: #684073;
+  border-color: #684073;
+  margin-top: 4px;
+}
+.message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+body {
+      font-family: "Roboto", sans-serif;
+}
+</style>
+    <div id="app" class="col-md-12">
+
+
+  <form v-if="auth" class="container offset-md-2" method="POST" style="margin-bottom:10px; margin-top: 4rem;" v-on:submit.prevent="pushData">
+
+  <button class="btn btn-md col-md-4 offset-md-8 col-xs-4 offset-xs-8" style="margin:0px; margin-bottom: 2rem" onclick="signOut()" >Sign OUT</button>
+
+      <h2 class="display-5" > ENTER YOUR SCORE </h2>
+
+<label for="groupe"> Type of Event </label>
+<select required class="form-control dropd col-md-8 col-xs-8 offset-xs-2" id="groupe" name="groupe" v-model="group">
+  <option value="individual" > Individual Events</option>
+  <option value="group" >Group Events</option>
+</select>
+
+      <div class="form-group">
+  <label for="exampleSelect2">Choose Category</label>
+  <select required class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="itemtype" name="itemtype" v-model="itemtype">
+    <option value="L"  >Literary Events</option>
+    <option value="O" >Main Events</option>
+  </select>
+</div>
+<div class="form-group">
+<label for="event">Event</label>
+<select required
+  v-model="eventselected" class="form-control dropd col-md-8 col-xs-8 offset-xs-2" id="event2" name="event2" >
+  <option  v-for="(item,i) in events"
+  :key = "i"
+  :value="item"
+  v-if="item.type === group && item.type2 === itemtype"
+  v-text="item.name"></option>
+</select>
+
+
+</div>
+
+<div class="form-group">
+  <label for="rank">Choose Rank</label>
+  <select class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="rank" name="rank" v-model="rank">
+    <option value="first"  >First</option>
+    <option value="second" >Second</option>
+    <option value="third" >Third</option>
+    <option value="negative" >Negative</option>
+  </select>
+</div>
+
+<div  class="form-group">
+  <label for="score">Enter Score</label>
+  <input type="number" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="score" name="score" v-model="score"></input>
+</div>
+
+<div  class="form-group">
+  <label for="name">Enter the Name</label>
+  <input type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="name" name="name" v-model="name"></input>
+</div>
+
+<div  class="form-group">
+  <label for="classnam">Enter the Class</label>
+  <input type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="classnam" name="classnam" v-model="classnam"></input>
+</div>
+
+<div class="form-group">
+  <label for="house">Enter the House</label>
+  <input type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="house" name="house" v-model="hous"></input>
+</div>
+          <button class="btn btn-md col-md-8 offset-md-2 col-xs-8 offset-xs-2" style="margin:0px;"id="quickstart-sign-in" name="submit">Submit</button>
+</form>
+  <form v-else class="container offset-md-2" method="POST" style="margin-bottom:10px; margin-top: 4rem;" v-on:submit.prevent="signIn">
+      <h2 class="display-5" > SIGN IN </h2>
+      <div class="form-group">
+  <label for="mailid">Enter Email Id</label>
+  <input type="email" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="mailid" name="mailid" v-model="mailid"></input>
+</div>
+
+<div class="form-group">
+  <label for="pass">Enter Password</label>
+  <input type="password" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="pass" name="pass" v-model="pass"></input>
+</div>
+
+<button class="btn btn-md col-md-8 offset-md-2 col-xs-8 offset-xs-2" style="margin:0px;" name="signin"  >Sign In</button>
+<img src="bharatham_bg.jpg" style="width: 100%;">
+</form>
+</div>
+</body>
+<script>
+
+function signOut(){
+    firebase.auth().signOut()
+    app.auth = null
+}
+var dat = {
+    events: [
+      { name:'WOLF_OF_KAKKANAD_STREET',type: 'group',type2:'O'},
+      { name:'GAME_OF_THRONES',type: 'group',type2:'O'},
+      { name: 'NADAN_PATTU',type: 'group',type2:'O'},
+      {  name: 'RANGOLI',type: 'group',type2:'O'},
+      {  name: 'MOVIE_SCENE_DUBBING',type: 'group',type2:'O'},
+      {  name: 'MIME',type: 'group',type2:'O'},
+      {  name: 'DRAMA',type: 'group',type2:'O'},
+      {  name: 'TABLEAU',type: 'group',type2:'O'},
+      {  name: 'THEMATIC_DANCE_GIRLS',type: 'group',type2:'O'},
+      {  name: 'NOSTALGIA_GIRLS',type: 'group',type2:'O'},
+      {  name: 'GROUP_DANCE_BOYS',type: 'group',type2:'O'},
+      {  name: 'SYNCHRONIZATION',type: 'group',type2:'O'},
+      {  name: 'THIRUVATHIRA',type: 'group',type2:'O'},
+      {  name: 'QUIZ',type: 'group',type2:'O'},
+      {  name: 'DEBATE_ENGLISH',type: 'group',type2:'O'},
+      {  name: 'DEBATE_MALAYALAM',type: 'group',type2:'O'},
+      {  name: 'SHORTFILM',type: 'group',type2:'O'},
+      {  name: 'OLD_MALAYALAM_SONG_DUET',type: 'group',type2:'O'},
+      {  name: 'FACE_PAINTING',type: 'group',type2:'O'},
+      {  name: 'FLOWER_ARRANGEMENT',type: 'group',type2:'O'},
+      {  name: 'GROUP_SONG_WESTERN',type: 'group',type2:'O'},
+      {  name: 'GROUP_SONG_EASTERN',type: 'group',type2:'O'},
+      {  name: 'UNPLUGGED',type: 'group',type2:'O'},
+      {  name: 'LIGHT_MUSIC_VOCAL_MALE',type: 'individual',type2:'O'},
+      {  name: 'LIGHT_MUSIC_VOCAL_FEMALE',type: 'individual',type2:'O'},
+      {  name: 'HINDUSTANI_CARNATIC_CLASSICAL_MUSIC',type: 'individual',type2:'O'},
+      {  name: 'WESTERN_VOCAL_SOLO_MALE_FEMALE',type: 'individual',type2:'O'},
+      {  name: 'INSTRUMENTAL_MUSIC_STRINGS',type: 'individual',type2:'O'},
+      {  name: 'INSTRUMENTAL_MUSIC_KEYBOARD',type: 'individual',type2:'O'},
+      {  name: 'INSTRUMENT_PERCUSSION',type: 'individual',type2:'O'},
+      {  name: 'INSTRUMENT_WIND',type: 'individual',type2:'O'},
+      {  name: 'MONOACT',type: 'individual',type2:'O'},
+      {  name: 'MIMICRY',type: 'individual',type2:'O'},
+      {  name: 'FANCY_DRESS',type: 'individual',type2:'O'},
+      {  name: 'BHARATHANATYAM',type: 'individual',type2:'O'},
+      {  name: 'MOHINIYATTOM',type: 'individual',type2:'O'},
+      {  name: 'FOLK_DANCE',type: 'individual',type2:'O'},
+      {  name: 'ADAPT_TUNE',type: 'individual',type2:'O'},
+      {  name: 'ON_THE_SPOT_PAINTING',type: 'individual',type2:'O'},
+      {  name: 'PHOTOGRAPHY',type: 'individual',type2:'O'},
+      {  name: 'AKSHARASLOKAM',type: 'individual',type2:'O'},
+      {  name: 'RECITATION_MAL',type: 'individual',type2:'O'},
+      {  name: 'RECITATION_ENG',type: 'individual',type2:'O'},
+      {  name: 'KADHAPRASANGAM ',type: 'individual',type2:'O'},
+      {  name: 'MOCK_PRESS',type: 'individual',type2:'O'},
+      {  name: 'ELOCUTION_ENG)',type: 'individual',type2:'O'},
+      {  name: 'ELOCUTION_MAL',type: 'individual',type2:'O'},
+      {  name: 'EXTEMPORE_ENG',type: 'individual',type2:'O'},
+      {  name: 'EXTEMPORE_MAL',type: 'individual',type2:'O'},
+      {  name: 'MANGLISH',type: 'individual',type2:'O'},
+      {  name: 'TURNAROUND',type: 'individual',type2:'O'},
+      {  name: 'MAPPILAPATT',type: 'individual',type2:'O'}
+    ],
+    eventselected: {  name:'GAME OF THRONES',type: 'group',type2:'O'},
+    group: null,
+    rank: null,
+    scor : null,
+    score: null,
+    itemtype: null,
+    auth: null,
+    mailid : null,
+    pass: null,
+    name: null,
+    classnam: null,
+    hous: null
+
+  }
+
+var app = new Vue({
+  el: '#app',
+  data: dat,
+  watch:{
+      score : function (val){
+        if (this.rank === 'negative'){
+          this.scor = -val
+        } else {
+          this.scor = val
+        }
+      }
+  },
+  methods: {
+    signIn : function() {
+        firebase.auth().signInWithEmailAndPassword(app.mailid, app.pass).catch(function(error) {
+         // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+         // ...
+      });
+
+      firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+          // User is signed in.
+              app.auth = true
+              // ...
+            } else {
+              // User is signed out.
+              // ...
+            }
+          });
+
+    },
+    pushData: function() {
+      firebase.database().ref('main/events/' + this.eventselected.name+'/prizes/'+this.rank).push({
+            score: this.scor,
+            house: this.hous,
+            name: this.name,
+            class: this.classnam
+      });
+      var sm={}
+      firebase.database().ref('main/score').once('value')
+      .then(function(snapshot) {
+    
+         sm = snapshot.val()
+          if( app.hous === 'aryans'){
+              sm.aryans = parseInt(sm.aryans) + parseInt(app.scor)
+          } else if( app.hous === 'mughals'){
+              sm.mughals = parseInt(sm.mughals) + parseInt(app.scor)
+          } else if( app.hous === 'rajputs'){
+              sm.rajputs = parseInt(sm.rajputs) + parseInt(app.scor)
+          } else if( app.hous === 'vikings'){
+              sm.vikings = parseInt(sm.vikings) + parseInt(app.scor)
+          } else if( app.hous === 'spartans'){
+              sm.spartans = parseInt(sm.spartans) + parseInt(app.scor)
+          } 
+          
+          firebase.database().ref('main/score').set(sm)
+      });
+      swal("Success", "Successfully Posted", "success")
+    }
+  }
+
+})
+
+
+if (firebase.auth().currentUser) {
+        app.auth = true
+ } 
+</script>
+</html>
