@@ -230,7 +230,7 @@ var dat = {
       {  name: 'RECITATION_ENG',type: 'individual',type2:'O'},
       {  name: 'KADHAPRASANGAM ',type: 'individual',type2:'O'},
       {  name: 'MOCK_PRESS',type: 'individual',type2:'O'},
-      {  name: 'ELOCUTION_ENG)',type: 'individual',type2:'O'},
+      {  name: 'ELOCUTION_ENG',type: 'individual',type2:'O'},
       {  name: 'ELOCUTION_MAL',type: 'individual',type2:'O'},
       {  name: 'EXTEMPORE_ENG',type: 'individual',type2:'O'},
       {  name: 'EXTEMPORE_MAL',type: 'individual',type2:'O'},
@@ -290,18 +290,22 @@ var app = new Vue({
     },
     pushData: function() {
       if(this.group === 'individual'){
-      firebase.database().ref('main/events/' + this.eventselected.name+'/prizes/'+this.rank).push({
+      firebase.database().ref('main/events/' + this.eventselected.name+'/'+this.rank).push({
             score: this.scor,
             house: this.hous,
+            eventName : this.eventselected.name,
+            position: this.rank,
             name: this.name,
-            class: this.classnam,
+            className: this.classnam,
             uploader: this.auth
       });
     } else {
-      firebase.database().ref('main/events/' + this.eventselected.name+'/prizes/'+this.rank).push({
+      firebase.database().ref('main/events/' + this.eventselected.name+'/'+this.rank).push({
             score: this.scor,
             house: this.hous,
-            class : 'nil',
+            eventName : this.eventselected.name,
+            position: this.rank,
+            className : 'nil',
             name: 'nil',
             uploader: this.auth
       });
@@ -336,6 +340,7 @@ var app = new Vue({
                     app.name = null
                     app.classnam = null
                     app.hous = null
+                    sm = null
               }
           })
       });
