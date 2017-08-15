@@ -125,7 +125,7 @@ body {
 
 <div class="form-group">
   <label for="rank">Choose Rank</label>
-  <select class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="rank" name="rank" v-model="rank">
+  <select  required class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="rank" name="rank" v-model="rank">
     <option value="first"  >First</option>
     <option value="second" >Second</option>
     <option value="third" >Third</option>
@@ -135,22 +135,28 @@ body {
 
 <div  class="form-group">
   <label for="score">Enter Score</label>
-  <input type="number" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="score" name="score" v-model="score"></input>
+  <input required type="number" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="score" name="score" v-model="score"></input>
 </div>
 
-<div  class="form-group">
+<div v-if="group != 'group'"  class="form-group">
   <label for="name">Enter the Name</label>
-  <input type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="name" name="name" v-model="name"></input>
+  <input required type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="name" name="name" v-model="name"></input>
 </div>
 
-<div  class="form-group">
+<div  v-if="group != 'group'" class="form-group">
   <label for="classnam">Enter the Class</label>
-  <input type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="classnam" name="classnam" v-model="classnam"></input>
+  <input required type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="classnam" name="classnam" v-model="classnam"></input>
 </div>
 
 <div class="form-group">
-  <label for="house">Enter the House</label>
-  <input type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="house" name="house" v-model="hous"></input>
+  <label for="house">Choose House</label>
+  <select  required class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="house" name="house" v-model="hous">
+    <option value="aryans"  >Aryans</option>
+    <option value="mughals" >Mughals</option>
+    <option value="spartans" >Spartans</option>
+    <option value="rajputs" >Rajputs</option>
+    <option value="vikings" >Vikings</option>
+  </select>
 </div>
           <button class="btn btn-md col-md-8 offset-md-2 col-xs-8 offset-xs-2" style="margin:0px;"id="quickstart-sign-in" name="submit">Submit</button>
 </form>
@@ -167,7 +173,7 @@ body {
 </div>
 
 <button class="btn btn-md col-md-8 offset-md-2 col-xs-8 offset-xs-2" style="margin:0px;" name="signin"  >Sign In</button>
-<img src="bharatham_bg.jpg" style="width: 100%;">
+<img src="https://rawgit.com/kirananto/bharatham/master/assets/bharatham_bg.jpg" style="width: 100%;">
 </form>
 </div>
 </body>
@@ -265,13 +271,15 @@ var app = new Vue({
          // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
+
+      swal("Sorry", "Wrong Username/Password", "error")
          // ...
       });
 
       firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
           // User is signed in.
-              app.auth = true
+              app.auth = firebase.auth().currentUser.email
               // ...
             } else {
               // User is signed out.
@@ -281,12 +289,23 @@ var app = new Vue({
 
     },
     pushData: function() {
+      if(this.group === 'individual'){
       firebase.database().ref('main/events/' + this.eventselected.name+'/prizes/'+this.rank).push({
             score: this.scor,
             house: this.hous,
             name: this.name,
-            class: this.classnam
+            class: this.classnam,
+            uploader: this.auth
       });
+    } else {
+      firebase.database().ref('main/events/' + this.eventselected.name+'/prizes/'+this.rank).push({
+            score: this.scor,
+            house: this.hous,
+            class : 'nil',
+            name: 'nil',
+            uploader: this.auth
+      });
+    }
       var sm={}
       firebase.database().ref('main/score').once('value')
       .then(function(snapshot) {
@@ -304,9 +323,22 @@ var app = new Vue({
               sm.spartans = parseInt(sm.spartans) + parseInt(app.scor)
           } 
           
-          firebase.database().ref('main/score').set(sm)
+          firebase.database().ref('main/score').set(sm,function(error){
+              if(!error) {
+                    swal("Success", "Successfully Posted", "success")
+                    app.group = null
+                    app.rank = null
+                    app.scor  = null
+                    app.score = null
+                    app.itemtype = null
+                    app.mailid  = null
+                    app.pass = null
+                    app.name = null
+                    app.classnam = null
+                    app.hous = null
+              }
+          })
       });
-      swal("Success", "Successfully Posted", "success")
     }
   }
 
@@ -314,7 +346,7 @@ var app = new Vue({
 
 
 if (firebase.auth().currentUser) {
-        app.auth = true
+        app.auth = firebase.auth().currentUser.email
  } 
 </script>
 </html>
