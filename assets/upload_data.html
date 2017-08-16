@@ -311,7 +311,7 @@ var app = new Vue({
       });
     }
       var sm={}
-      firebase.database().ref('House').once('value')
+      firebase.database().ref('Score/House').once('value')
       .then(function(snapshot) {
     
          sm = snapshot.val()
@@ -327,7 +327,7 @@ var app = new Vue({
               sm.spartans = (parseInt(sm.spartans) + parseInt(app.scor)) + ''
           } 
           
-          firebase.database().ref('House').set(sm,function(error){
+          firebase.database().ref('Score/House').set(sm,function(error){
               if(!error) {
                     swal("Success", "Successfully Posted", "success")
                     app.group = null
