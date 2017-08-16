@@ -281,7 +281,6 @@ var app = new Vue({
           if (user) {
           // User is signed in.
               app.auth = firebase.auth().currentUser.email
-              // ...
             } else {
               // User is signed out.
               // ...
@@ -312,23 +311,23 @@ var app = new Vue({
       });
     }
       var sm={}
-      firebase.database().ref('main/score').once('value')
+      firebase.database().ref('House').once('value')
       .then(function(snapshot) {
     
          sm = snapshot.val()
           if( app.hous === 'aryans'){
-              sm.aryans = parseInt(sm.aryans) + parseInt(app.scor)
+              sm.aryans = (parseInt(sm.aryans) + parseInt(app.scor)) + ''
           } else if( app.hous === 'mughals'){
-              sm.mughals = parseInt(sm.mughals) + parseInt(app.scor)
+              sm.mughals = (parseInt(sm.mughals) + parseInt(app.scor)) + ''
           } else if( app.hous === 'rajputs'){
-              sm.rajputs = parseInt(sm.rajputs) + parseInt(app.scor)
+              sm.rajputs = (parseInt(sm.rajputs) + parseInt(app.scor)) + ''
           } else if( app.hous === 'vikings'){
-              sm.vikings = parseInt(sm.vikings) + parseInt(app.scor)
+              sm.vikings = (parseInt(sm.vikings) + parseInt(app.scor)) + ''
           } else if( app.hous === 'spartans'){
-              sm.spartans = parseInt(sm.spartans) + parseInt(app.scor)
+              sm.spartans = (parseInt(sm.spartans) + parseInt(app.scor)) + ''
           } 
           
-          firebase.database().ref('main/score').set(sm,function(error){
+          firebase.database().ref('House').set(sm,function(error){
               if(!error) {
                     swal("Success", "Successfully Posted", "success")
                     app.group = null
