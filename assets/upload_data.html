@@ -138,7 +138,7 @@ body {
   <input required type="number" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="score" name="score" v-model="score"></input>
 </div>
 
-<div v-if="group != 'group'"  class="form-group">
+<div  class="form-group">
   <label for="name">Enter the Name</label>
   <input required type="text" class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="name" name="name" v-model="name"></input>
 </div>
@@ -210,7 +210,8 @@ var dat = {
       {  name: 'UNPLUGGED',type: 'group',type2:'O'},
       {  name: 'LIGHT_MUSIC_VOCAL_MALE',type: 'individual',type2:'O'},
       {  name: 'LIGHT_MUSIC_VOCAL_FEMALE',type: 'individual',type2:'O'},
-      {  name: 'HINDUSTANI_CARNATIC_CLASSICAL_MUSIC',type: 'individual',type2:'O'},
+      {  name: 'HINDUSTANI_CLASSICAL_MUSIC',type: 'individual',type2:'O'},
+      {  name: 'HINDUSTANI_CARNATIC_MUSIC',type: 'individual',type2:'O'},
       {  name: 'WESTERN_VOCAL_SOLO_MALE_FEMALE',type: 'individual',type2:'O'},
       {  name: 'INSTRUMENTAL_MUSIC_STRINGS',type: 'individual',type2:'O'},
       {  name: 'INSTRUMENTAL_MUSIC_KEYBOARD',type: 'individual',type2:'O'},
@@ -306,7 +307,7 @@ var app = new Vue({
             eventName : this.eventselected.name,
             position: this.rank,
             className : 'nil',
-            name: 'nil',
+            name: this.name,
             uploader: this.auth
       });
     }
