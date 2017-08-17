@@ -302,30 +302,39 @@ var app = new Vue({
 
     },
     pushData: function() {
-      if(this.group === 'individual'){
-      firebase.database().ref('main/events/' + this.eventselected.name+'/'+this.rank).push({
-            score: this.scor,
-            house: this.hous,
-            eventName : this.eventselected.name,
-            position: this.rank,
-            name: this.name,
-            className: this.classnam,
-            uploader: this.auth
+    	firebase.database().ref('main/final/'+app.eventselected.name).once('value').then(function(snapshot1) {
+    	if(snapshot1.val() === 0){
+      if(app.group === 'individual'){
+      firebase.database().ref('main/events/' + app.eventselected.name+'/'+app.rank).push({
+            score: app.scor,
+            house: app.hous,
+            eventName : app.eventselected.name,
+            position: app.rank,
+            name: app.name,
+            className: app.classnam,
+            uploader: app.auth
+      },function(error){
+      	if(error){
+      			swal("Failed to write", "Error", "error")
+      	}
       });
     } else {
-      firebase.database().ref('main/events/' + this.eventselected.name+'/'+this.rank).push({
-            score: this.scor,
-            house: this.hous,
-            eventName : this.eventselected.name,
-            position: this.rank,
+      firebase.database().ref('main/events/' + app.eventselected.name+'/'+app.rank).push({
+            score: app.scor,
+            house: app.hous,
+            eventName : app.eventselected.name,
+            position: app.rank,
             className : 'nil',
-            name: this.name,
-            uploader: this.auth
+            name: app.name,
+            uploader: app.auth
+      },function(error){
+      	if(error){
+      			swal("Failed to write", "Error", "error")
+      	}
       });
-    }
+    }	
       var sm={}
-      firebase.database().ref('Score/House').once('value')
-      .then(function(snapshot) {
+      firebase.database().ref('Score/House').once('value').then(function(snapshot) {
     
          sm = snapshot.val()
           if( app.hous === 'aryans'){
@@ -357,7 +366,11 @@ var app = new Vue({
               }
           })
       });
+    } else {
+    	swal("Failed to write", "Already Finalized", "error")
     }
+    })
+}
   }
 
 })

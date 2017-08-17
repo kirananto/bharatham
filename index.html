@@ -17,10 +17,9 @@
   <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/dropdown/css/style.css">
   <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/socicon/css/styles.css">
   <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/theme/css/style.css">
-  <link rel="stylesheet" href="assets/additional/css/additional.css" type="text/css">
+  <link rel="stylesheet" href="https://rawgit.com/kirananto/bharatham/master/assets/additional/css/additional.css">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
 <script>
   // Initialize Firebase
@@ -33,14 +32,9 @@
     messagingSenderId: "859947034253"
   };
   firebase.initializeApp(config);
- var scoreRef = firebase.database().ref('main/score');
-scoreRef.on('value', function(snapshot) {
-  app.groups[0].Points = snapshot.val().aryans
-  app.groups[1].Points = snapshot.val().mughals
-  app.groups[2].Points = snapshot.val().rajputs
-  app.groups[3].Points = snapshot.val().vikings
-  app.groups[4].Points = snapshot.val().spartans
-});
+ var scoreRef = firebase.database().ref('Score/House');
+ var galleryRef = firebase.database().ref('gallery');
+ var videoRef = firebase.database().ref('video_app');
 </script>
 
 </head>
@@ -93,8 +87,7 @@ scoreRef.on('value', function(snapshot) {
 
       <div class="container align-center">
           <div class="media-container-column mbr-white col-md-10 offset-md-1">
-            <canvas id="scene" class="mbr-section-title " style="margin-top:70px;" width="1332" height="250"></canvas>
-            <h1 class="mbr-section-title pb-3 mbr-fonts-style display-1 hidden " id="2k17">2K17</h1>
+            <canvas id="scene" class="mbr-section-title " style="margin-top:70px;"></canvas>
 
 
           </div>
@@ -102,7 +95,7 @@ scoreRef.on('value', function(snapshot) {
   </section>
 
 
-  <section v-if="testing" class="cid-qsa76ohnMU" id="pricing-tables1-k" data-rv-view="32">
+  <section v-if="testing" class="cid-qsa76ohnMU mbr-fullscreen " id="pricing-tables1-k" data-rv-view="32">
 
     
 
@@ -113,21 +106,24 @@ scoreRef.on('value', function(snapshot) {
 
             <div v-for="group in groups" class="plan col-12 mx-2 my-2 justify-content-center col-lg-2">
                 <div class="plan-header text-center pt-5">
-                <img :src="'assets/images/group/'+group.groupname+'.png'" 
+                <img :src="'https://rawgit.com/kirananto/bharatham/master/assets/images/group/'+group.groupname+'.png'" 
                     class="groupimg">
                     <h3 class=" mbr-fonts-style display-5 text-black " v-text="group.groupname">
                     </h3>
                     
-                <div class="plan-body">
+                <div class="plan-body" style="padding-bottom: 2rem !important;" >
                     <span class="price-figure mbr-fonts-style display-1" v-text="group.Points">
                         </span>
-                        <small class="price-term mbr-fonts-style display-7"><br>  
+                        <small class=" mbr-fonts-style display-7"><br>  
                             Points
-                        </small>
+                        </small >
                 </div>
             </div>
           </div>
-    </div>
+
+    </div><a href="#" class="play_button col-md-12 ">
+     <img class="col-md-2 offset-md-5"  style="margin-top: 3rem;"
+        src="https://rawgit.com/kirananto/bharatham/master/assets/images/play_button.png"></a>
 </section>
 <section once="" class="cid-qrtL4E2nFT" id="footer7-o" data-rv-view="83">
 
@@ -166,35 +162,83 @@ scoreRef.on('value', function(snapshot) {
                         <a href="https://instagram.com/_u/bharatham2k176699" target="_blank">
                             <span class="mbr-iconfont mbr-iconfont-social socicon-instagram socicon" media-simple="true"></span>
                         </a>
+                    </div><div class="soc-item">
+                        <a href="#" target="_blank">
+                            <span class="mbr-iconfont mbr-iconfont-social socicon-play socicon" media-simple="true"></span>
+                        </a>
                     </div></div>
             </div>
             <div class="row row-copirayt">
-                <p class="mbr-text mb-0 mbr-fonts-style mbr-white display-7"></p>
+                <p class="mbr-text mb-0 mbr-fonts-style mbr-white display-7"> 
+© Copyright 2017 Bharatham- All Rights Reserved</p>
             </div>
         </div>
     </div>
 </section>
 
-<div class="modal fade Register" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+  <div class="modal fade Gallery" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg col-md-12">
     <div class="modal-content"
     class="col-md-6">
-<div class="embed-responsive">
-  <!-- /*<style>iframe{width:100%}</style>*/ -->
-<iframe id="ifram" class="frm" target="_parent"
-src="/register/" style="border-radius:10px;"
-  frameborder="0"
-  marginheight="0"
-  marginwidth="0">Loading...</iframe>
-  <!-- <script>iFrameResize({log:true}, '#ifram')</script> -->
-</div>
 
+    <div class="container align-center">
+          <h1 class="pb-3 mbr-fonts-style mbr-section-title text-black  bold display-1" style="padding-top:10px;">
+             Gallery
+          </h1>
+<div class="row" style="margin-bottom:50px;">
+
+          <div v-for="video in videos" class="col-lg-6 col-md-6" style="margin-bottom:50px;" >
+         <iframe :src="video" frameborder="0" style="padding: 0px; margin:0px; width:100%; height:100%; border-radius: 8px;" allowfullscreen></iframe></div>
+
+         <div v-for="image in images" class="col-lg-6 col-md-6" style="margin-bottom: 50px;"><img style="width: 100%; height: 100%; padding: 0px; margin:0px; border-radius: 8px;" :src="image.url"></div>
+       </div></div>
 </div>
 
     </div>
   </div>
+  <div class="modal fade gtouch" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content col-md-12">
+
+      <div class="container align-center">
+          <h1 class="pb-3 mbr-fonts-style mbr-section-title text-black  bold display-1" style="padding-top:10px;">
+             THESE PEOPLE RUN THE SHOW
+          </h1>
+          <div class="row media-row" style="margin-bottom:50px;">
+
+          <div v-for="person in people"
+                   class="team-item col-lg-4 col-md-6">
+                  <div class="item-image">
+                      <img v-bind:src="person.imgurl" class="img-icon" media-simple="true">
+                  </div>
+                  <div class="item-caption py-3">
+                      <div class="item-name px-2">
+                          <p class="mbr-fonts-style display-5" v-text="person.name">
+                          </p>
+                      </div>
+                      <div class="item-role px-2">
+                          <p v-text="person.position"></p>
+                      </div>
+                      <div class="item-social pt-2">
+                          <a v-bind:href="person.fbUrl" target="_blank">
+                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+
+
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              </div>
+      </div>
 </div>
-<audio  autoplay = "autoplay" id="myAudio"
+</div>
+</div>
+</div>
+<audio  loop autoplay = "autoplay" id="myAudio"
  <source  src="https://rawgit.com/kirananto/bharatham/master/assets/audio/bgm.mp3"
          type='audio/mp4'>
 </audio>
@@ -213,6 +257,16 @@ src="/register/" style="border-radius:10px;"
 }
 
 </style>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/tether/tether.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/smooth-scroll/smooth-scroll.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/dropdown/js/script.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
+  <script src="https://rawgit.com/kirananto/bharatham/master/assets/jarallax/jarallax.min.js"></script>
+  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/theme/js/script.js"></script>
+  <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.0/Rx.min.js"></script>
 <script>
 function aud_play_pause() {
 var myAudio = document.getElementById("myAudio");
@@ -223,261 +277,57 @@ var myAudio = document.getElementById("myAudio");
   }
 }
 
-</script>
-<div class="modal fade gtouch" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg ">
-    <div class="modal-content col-md-12">
 
-      <div class="container align-center">
-          <h1 class="pb-3 mbr-fonts-style mbr-section-title text-black  bold display-1" style="padding-top:10px;">
-             THESE PEOPLE RUN THE SHOW
-          </h1>
-          <div class="row media-row" style="margin-bottom:50px;">
-
-          <div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAbrAAAAJDBjZjFhZjliLWJjYjMtNGYxMy1iNWEyLTIyOTY5ODk4YjhlMg.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Bisto Baby
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>Chairman</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/bisto.sebastian" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div><div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/zen.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             George Zen Joe
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>Arts Secretary</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/Georgezn510" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div><div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/delma.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Delma Joseph
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>Vice Chairperson</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/delz.joseph" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              <div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/arjun.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Arjun Sethunath
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>General Convenor</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/Arjun.sethunath" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              <div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/razi.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Razi Abdul Rahman
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>General Secretary</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/razi.abdulrahman.1" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              <div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/kiran.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Kiran Anto
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>Tech Support</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/kiran.anto1" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              <div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAy_AAAAJDU5YzIzOTYyLTQxZDItNGU5ZC04MTkzLWFhMDE3ZmY5NmYwZQ.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Abhinav Thomas
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p>Tech Support</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/abhinavthomas" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              <div class="team-item col-lg-4 col-md-6">
-                  <div class="item-image">
-                      <img src="https://rawgit.com/kirananto/bharatham/master/assets/images/gokul.jpg" class="img-icon" media-simple="true">
-                  </div>
-                  <div class="item-caption py-3">
-                      <div class="item-name px-2">
-                          <p class="mbr-fonts-style display-5">
-                             Gokul Krishna
-                          </p>
-                      </div>
-                      <div class="item-role px-2">
-                          <p> Finance Head</p>
-                      </div>
-                      <div class="item-social pt-2">
-                          <a href="https://www.facebook.com/gokulk10" target="_blank">
-                              <span class="p-1 socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-                              <span class="p-1 socicon-linkedin socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
-
-
-                          </a>
-                      </div>
-                  </div>
-              </div></div>
-      </div>
-</div>
-
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/web/assets/jquery/jquery.min.js"></script>
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/tether/tether.min.js"></script>
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/smooth-scroll/smooth-scroll.js"></script>
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/dropdown/js/script.min.js"></script>
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
-  <script src="https://rawgit.com/kirananto/bharatham/master/assets/jarallax/jarallax.min.js"></script>
-  <script src="https://cdn.rawgit.com/kirananto/bharatham/master/assets/theme/js/script.js"></script>
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script>
-
-var dat = {
+var app = new Vue({
+  el: '#app',
+  data: {
   menu: [
     { icon: 'mbri-touch',title:'Get in Touch',class:'.gtouch'},
-    { icon: 'mbri-login', title: 'Register',class:'.Register' }
+    { icon: 'mbri-login', title: 'Gallery',class:'.Gallery' }
   ],
+  people: [
+  { name: "Bisto Baby" ,position:"Chairman",imgurl:"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAbrAAAAJDBjZjFhZjliLWJjYjMtNGYxMy1iNWEyLTIyOTY5ODk4YjhlMg.jpg",fbUrl:"https://www.facebook.com/bisto.sebastian"},
+  {name: "George Zen Joe" ,position:"Arts Secretary",imgurl:"https://rawgit.com/kirananto/bharatham/master/assets/images/zen.jpg",fbUrl:"https://www.facebook.com/Georgezn510"},
+  {name: "Delma Joseph" ,position:"Vice Chairperson",imgurl:"https://rawgit.com/kirananto/bharatham/master/assets/images/delma.jpg",fbUrl:"https://www.facebook.com/delz.joseph"},
+    {name: "Arjun Sethunath" ,position:"General Convenor",imgurl:"https://rawgit.com/kirananto/bharatham/master/assets/images/arjun.jpg",fbUrl:"https://www.facebook.com/delz.joseph"},
+    {name: "Razi Abdul Rahman" ,position:"General Secretary",imgurl:"https://rawgit.com/kirananto/bharatham/master/assets/images/razi.jpg",fbUrl:"https://www.facebook.com/razi.abdulrahman.1"},
+    {name: "Gokul Krishna" ,position:"Finance Head",imgurl:"https://rawgit.com/kirananto/bharatham/master/assets/images/gokul.jpg",fbUrl:"https://www.facebook.com/gokulk10"},
+    {name: "Kiran Anto" ,position:"Tech Support",imgurl:"https://rawgit.com/kirananto/bharatham/master/assets/images/kiran.jpg",fbUrl:"https://www.facebook.com/kiran.anto1"},
+    {name: "Abhinav Thomas" ,position:"Tech Support",imgurl:"https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAy_AAAAJDU5YzIzOTYyLTQxZDItNGU5ZC04MTkzLWFhMDE3ZmY5NmYwZQ.jpg",fbUrl:"https://www.facebook.com/abhinavthomas"}],
   title: 'BHARATHAM\
           2k17',
-  register: true,
-  logo: false,
-  testing: false,
+  testing: true,
   groups: [
       {groupname: 'Aryans', Points:0},
       {groupname: 'Mughals', Points:0},
       {groupname: 'Rajputs', Points:0},
       {groupname: 'Vikings', Points:0},
       {groupname: 'Spartans', Points:0}
-
   ],
-};
-
-var app = new Vue({
-  el: '#app',
-  data: dat,
-  methods: {
-         retrunval : function (){
-           if(logo == true ) {
-             return true;
-           }
-         }
-   }
+  videos: [],
+  images: []
+}
 
 })
+
+scoreRef.on('value', function(snapshot) {
+  app.groups[0].Points = snapshot.val().aryans
+  app.groups[1].Points = snapshot.val().mughals
+  app.groups[2].Points = snapshot.val().rajputs
+  app.groups[3].Points = snapshot.val().vikings
+  app.groups[4].Points = snapshot.val().spartans
+});
+
+galleryRef.on('value', function(snapshot) {
+  app.images = snapshot.val()
+  // console.log(snapshot.val())
+});
+
+videoRef.on('value', function(snapshot) {
+  // console.log(snapshot.val().videos[0]) 
+  // app.videos = snapshot.val().videos
+  // console.log(snapshot.val())
+});
 
 
 
@@ -496,8 +346,8 @@ var text = [
 //
 
 
-var scrollDelay = 2000; // delay for accepting the next scroll event
-var autoScrollDelay = 5000;
+var scrollDelay = 1000; // delay for accepting the next scroll event
+var autoScrollDelay = 1500;
 // uncomment to override the defaults
 
  var colors = ["#ffffff","#684073", "#ffffff","#b35552", "#ffffff"];
@@ -514,7 +364,7 @@ ctx = canvas.getContext("2d");
 particles = [];
 amount = 0;
 mouse = {x:0,y:0};
-radius = 0.7;
+radius = 0.4;
 
 var lastPosX = [];
 var lastPosY = [];
@@ -587,7 +437,7 @@ function onMouseMove(e){
 }
 
 function onTouchMove(e){
-  console.log("moved");
+  // console.log("moved");
   if(e.touches.length > 0 ){
     mouse.x = e.touches[0].clientX;
     mouse.y = e.touches[0].clientY;
@@ -595,13 +445,13 @@ function onTouchMove(e){
 }
 
 function onTouchEnd(e){
-  console.log("ended");
+  // console.log("ended");
   mouse.x = -9999;
   mouse.y = -9999;
 }
 
 function onMouseUp(e){
-  console.log("mu");
+  // console.log("mu");
   setTimeout(()=>{
     mouse.x = -9999;
     mouse.y = -9999;
@@ -626,7 +476,7 @@ function initScene(text){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "screen";
 
-  console.log("length" + lastPosX.length);
+  // console.log("length" + lastPosX.length);
   particles = [];
   var count = 0;
   for(var i=0;i<ww;i+=Math.round(ww/densityFactor)){
@@ -648,12 +498,12 @@ function initScene(text){
   amount = particles.length;
 
 
-  console.log("no.of parts: " + amount)
+  // console.log("no.of parts: " + amount)
 }
 
 function onMouseClick(){
   //radius++;
-  console.log("click");
+  // console.log("click");
   if(radius ===5){
     radius = 0;
   }
@@ -679,19 +529,19 @@ window.addEventListener("touchend", onTouchEnd);
 
 setTimeout(() => { // prevent the user from scrolling too soon
   lock = false;
-  console.log("init scene");
+  // console.log("init scene");
   initScene(text[0]);
-  console.log("render scene");
+  // console.log("render scene");
   requestAnimationFrame(render);
   setInterval(() => {
-    console.log("set interval!");
+    // console.log("set interval!");
     // while(lock){
     //   console.log("while loop");
     // }
     if (lock === false){
       lock = true;
       textOnDisplay = (textOnDisplay + 1) % text.length;
-      console.log("------TEXTONDISPLAY---"+textOnDisplay);
+      // console.log("------TEXTONDISPLAY---"+textOnDisplay);
       if(textOnDisplay < 5) {
         initScene(text[textOnDisplay]);
       setTimeout(() => { // prevent the user from scrolling too soon
@@ -722,7 +572,7 @@ window.sr = ScrollReveal();
     .subscribe( (delta) => {
       lock = true;
       var t = delta?(textOnDisplay > 1 ? textOnDisplay - 1: 0 ): (textOnDisplay < text.length -1? textOnDisplay + 1:textOnDisplay)
-      console.log(delta,textOnDisplay);
+      // console.log(delta,textOnDisplay);
       if (t != textOnDisplay){
         textOnDisplay = t;
         initScene(text[textOnDisplay]);
