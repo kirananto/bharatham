@@ -96,19 +96,6 @@ body {
 
       <h2 class="display-5" > ENTER YOUR SCORE </h2>
 
-<label for="groupe"> Type of Event </label>
-<select required class="form-control dropd col-md-8 col-xs-8 offset-xs-2" id="groupe" name="groupe" v-model="group">
-  <option value="individual" > Individual Events</option>
-  <option value="group" >Group Events</option>
-</select>
-
-      <div class="form-group">
-  <label for="exampleSelect2">Choose Category</label>
-  <select required class="form-control dropd form2 col-md-8 col-xs-8 offset-xs-2" id="itemtype" name="itemtype" v-model="itemtype">
-    <option value="L"  >Literary Events</option>
-    <option value="O" >Main Events</option>
-  </select>
-</div>
 <div class="form-group">
 <label for="event">Event</label>
 <select required
@@ -116,7 +103,6 @@ body {
   <option  v-for="(item,i) in events"
   :key = "i"
   :value="item"
-  v-if="item.type === group && item.type2 === itemtype"
   v-text="item.name"></option>
 </select>
 
@@ -185,79 +171,18 @@ function signOut(){
 }
 var dat = {
     events: [
-      {  name: 'ADAPT_TUNE',type: 'individual',type2:'O'},
-      {  name: 'AKSHARASLOKAM',type: 'individual',type2:'O'},
-      {  name: 'BHARATHANATYAM',type: 'individual',type2:'O'},
-      {  name: 'DEBATE_ENGLISH',type: 'group',type2:'O'},
-      {  name: 'DEBATE_MALAYALAM',type: 'group',type2:'O'},
-      {  name: 'DRAMA',type: 'group',type2:'O'},
-      {  name: 'ELOCUTION_ENG',type: 'individual',type2:'O'},
-      {  name: 'ELOCUTION_MAL',type: 'individual',type2:'O'},
-      {  name: 'EXTEMPORE_ENG',type: 'individual',type2:'O'},
-      {  name: 'EXTEMPORE_MAL',type: 'individual',type2:'O'},
-      {  name: 'FACE_PAINTING',type: 'group',type2:'O'},
-      {  name: 'FANCY_DRESS',type: 'individual',type2:'O'},
-      {  name: 'FLOWER_ARRANGEMENT',type: 'group',type2:'O'},
-      {  name: 'FOLK_DANCE',type: 'individual',type2:'O'},
-      {  name: 'GROUP_DANCE_BOYS',type: 'group',type2:'O'},
-      {  name: 'GROUP_SONG_EASTERN',type: 'group',type2:'O'},
-      {  name: 'GROUP_SONG_WESTERN',type: 'group',type2:'O'},
-      {  name: 'HINDUSTANI_CARNATIC_MUSIC',type: 'individual',type2:'O'},
-      {  name: 'HINDUSTANI_CLASSICAL_MUSIC',type: 'individual',type2:'O'},
-      {  name: 'INSTRUMENT_PERCUSSION',type: 'individual',type2:'O'},
-      {  name: 'INSTRUMENT_WIND',type: 'individual',type2:'O'},
-      {  name: 'INSTRUMENTAL_MUSIC_KEYBOARD',type: 'individual',type2:'O'},
-      {  name: 'INSTRUMENTAL_MUSIC_STRINGS',type: 'individual',type2:'O'},
-      {  name: 'KADHAPRASANGAM ',type: 'individual',type2:'O'},
-      {  name: 'LIGHT_MUSIC_VOCAL_FEMALE',type: 'individual',type2:'O'},
-      {  name: 'LIGHT_MUSIC_VOCAL_MALE',type: 'individual',type2:'O'},
-      {  name: 'MANGLISH',type: 'individual',type2:'O'},
-      {  name: 'MAPPILAPATT',type: 'individual',type2:'O'},
-      {  name: 'MIME',type: 'group',type2:'O'},
-      {  name: 'MIMICRY',type: 'individual',type2:'O'},
-      {  name: 'MOCK_PRESS',type: 'individual',type2:'O'},
-      {  name: 'MOHINIYATTOM',type: 'individual',type2:'O'},
-      {  name: 'MONOACT',type: 'individual',type2:'O'},
-      {  name: 'MOVIE_SCENE_DUBBING',type: 'group',type2:'O'},
-      {  name: 'NOSTALGIA_GIRLS',type: 'group',type2:'O'},
-      {  name: 'OLD_MALAYALAM_SONG_DUET',type: 'group',type2:'O'},
-      {  name: 'ON_THE_SPOT_PAINTING',type: 'individual',type2:'O'},
-      {  name: 'PHOTOGRAPHY',type: 'individual',type2:'O'},
-      {  name: 'QUIZ',type: 'group',type2:'O'},
-      {  name: 'RANGOLI',type: 'group',type2:'O'},
-      {  name: 'RECITATION_ENG',type: 'individual',type2:'O'},
-      {  name: 'RECITATION_MAL',type: 'individual',type2:'O'},
-      {  name: 'SHORTFILM',type: 'group',type2:'O'},
-      {  name: 'SYNCHRONIZATION',type: 'group',type2:'O'},
-      {  name: 'TABLEAU',type: 'group',type2:'O'},
-      {  name: 'THEMATIC_DANCE_GIRLS',type: 'group',type2:'O'},
-      {  name: 'THIRUVATHIRA',type: 'group',type2:'O'},
-      {  name: 'TURNAROUND',type: 'individual',type2:'O'},
-      {  name: 'UNPLUGGED',type: 'group',type2:'O'},
-      {  name: 'WESTERN_VOCAL_SOLO_MALE_FEMALE',type: 'individual',type2:'O'},
-      { name: 'NADAN_PATTU',type: 'group',type2:'O'},
-      { name:'GAME_OF_THRONES',type: 'group',type2:'O'},
-      { name:'BHARATHAM_NEWSLETTER',type: 'individual',type2:'O'},
-      { name:'WOLF_OF_KAKKANAD_STREET',type: 'group',type2:'O'},
-      { name:'POETRY_WRITING_MAL',type: 'individual',type2:'L'},
-      { name: 'ESSAY_WRITING_ENG',type: 'individual' ,type2:'L'},
-      { name: 'POSTER_DESIGNING',type: 'individual',type2:'L' },
-      { name: 'POETRY_WRITING_ENG',type: 'individual',type2:'L' },
-      { name: 'SHORT_STORY_MAL',type: 'individual',type2:'L' },
-      { name: 'CARTOON_DRAWING',type: 'individual',type2:'L' },
-      { name: 'FILM_REVIEW',type: 'individual' ,type2:'L'},
-      { name: 'ESSAY_WRITING_MAL',type: 'individual',type2:'L' },
-      { name: 'PENCIL_DRAWING',type: 'individual',type2:'L' },
-      { name: 'SHORT_STORY',type: 'individual',type2:'L' },
-      { name: 'PAPER_COLLAGE',type: 'group',type2:'L' },
-      { name: 'GRAFETTI_ART',type: 'group',type2:'L' }
+      {  name: 'GROUP_DANCE_BOYS'},
+      {  name: 'THEMATIC_DANCE_GIRLS'},
+      { name:'GAME_OF_THRONES'},
+      { name:'BHARATHAM_NEWSLETTER'},
+      { name:'WOLF_OF_KAKKANAD_STREET'},
+      { name:'PHOTOGRAPHY'},
     ],
-    eventselected: {  name:'GAME OF THRONES',type: 'group',type2:'O'},
+    eventselected: {  name:'GAME OF THRONES'},
     group: null,
     rank: null,
     scor : null,
     score: null,
-    itemtype: null,
     auth: null,
     mailid : null,
     pass: null,
@@ -358,7 +283,6 @@ var app = new Vue({
                     app.rank = null
                     app.scor  = null
                     app.score = null
-                    app.itemtype = null
                     app.mailid  = null
                     app.pass = null
                     app.name = null
